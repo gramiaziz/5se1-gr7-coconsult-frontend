@@ -32,6 +32,8 @@
     "@popperjs/core": "^2.11.8",
     "@swimlane/ngx-charts": "^20.5.0",
     "@syncfusion/ej2-angular-kanban": "^25.1.35",
+    "@syncfusion/ej2-buttons": "^25.2.3",
+    "@syncfusion/ej2-inputs": "^25.2.3",
     "angular-calendar": "^0.31.0",
     "angular-highcharts": "^15.0.1",
     "angular-progress-bar": "^1.0.11",

@@ -13,7 +13,7 @@ export class RegisterComponent implements OnInit {
     email: null,
     password: null,
     image: null,
-    role: 'user'
+    role: 'employee'
   };
   qrCodeUri: string = '';
 

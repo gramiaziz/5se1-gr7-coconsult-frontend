@@ -33,10 +33,10 @@ export class StatsComponent implements OnInit {
 
       this.cash = this.percentage[0].percentage;
       this.check = this.percentage[1].percentage;
-      this.check = this.percentage[2].percentage;
+      this.card = this.percentage[2].percentage;
       console.log(this.cash + "cash");
       console.log(this.check + "check");
-      console.log(this.cash + "card");
+      console.log(this.card + "card");
 
       this.initializeCharts();
     })
