@@ -35,6 +35,14 @@
               "src/assets/Front/jsaziz/main.js",
               "src/assets/Front/jsaziz/script.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "core-js/modules/web.dom-collections.iterator.js",
+              "raf",
+              "rgbcolor",
+              "sweetalert2",
+              "html2canvas",
+              "moment"
             ]
           },
           "configurations": {
