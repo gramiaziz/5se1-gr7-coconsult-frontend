@@ -21,7 +21,8 @@ pipeline {
 
         stage('Build Frontend') {
             steps {
-                sh 'npm install'
+                // Add --legacy-peer-deps to bypass dependency conflict
+                sh 'npm install --legacy-peer-deps'
                 sh 'ng build'
             }
         }
