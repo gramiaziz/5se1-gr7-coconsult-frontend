@@ -6,25 +6,20 @@ pipeline {
         IMAGE_TAG = 'latest'  
     }
 
-    stages {
-        stage('Checkout Frontend') {
+    stage('Build Frontend') {
             steps {
-                script {
-                    // Vérification de l'accessibilité du dépôt Git
-                    def gitStatus = sh(script: 'git ls-remote https://github.com/gramiaziz/5se1-gr7-coconsult-frontend.git', returnStatus: true)
-                    if (gitStatus != 0) {
-                        error("Failed to access Git repository")
-                    }
-                }
-                // Checkout du code depuis le dépôt Git
-                git branch: 'feature-chaimaktari', url: 'https://github.com/gramiaziz/5se1-gr7-coconsult-frontend.git'
+                sh 'npm install'
+                // Add --legacy-peer-deps to bypass dependency conflict
+                sh 'npm install --legacy-peer-deps'
+                sh 'ng build'
             }
         }
+
         stage('Docker Build Frontend') {
             steps {
                 script {
-                    // Construction de l'image Docker pour le frontend
-                    sh "docker build -t ${DOCKER_IMAGE}:${IMAGE_TAG} ."
+                    // Build Docker image for frontend
+                    sh 'docker build -t ${DOCKER_IMAGE}:${IMAGE_TAG} .'
                 }
             }
         }
@@ -32,17 +27,16 @@ pipeline {
         stage('Push Frontend Docker Image to Docker Hub') {
             steps {
                 script {
-                    // Utilisation des credentials Docker Hub
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                        retry(3) { // Tentatives de réessayer en cas d'échec jusqu'à 3 fois
-                            // Connexion à Docker Hub
-                            sh script: "echo \$DOCKER_PASSWORD | docker login -u \$DOCKER_USERNAME --password-stdin", returnStdout: true
-                            
-                            // Tag de l'image Docker
-                            sh "docker tag ${DOCKER_IMAGE}:${IMAGE_TAG} \$DOCKER_USERNAME/${DOCKER_IMAGE}:${IMAGE_TAG}"
-                            
-                            // Push de l'image Docker vers Docker Hub
-                            sh "docker push \$DOCKER_USERNAME/${DOCKER_IMAGE}:${IMAGE_TAG}"
+                        retry(3) { // Retry up to 3 times
+                            // Login to Docker Hub
+                            sh script: 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin', returnStdout: true
+
+                            // Tag the Docker image
+                            sh 'docker tag ${DOCKER_IMAGE}:${IMAGE_TAG} $DOCKER_USERNAME/${DOCKER_IMAGE}:${IMAGE_TAG}'
+
+                            // Push the Docker image
+                            sh 'docker push $DOCKER_USERNAME/${DOCKER_IMAGE}:${IMAGE_TAG}'
                         }
                     }
                 }
@@ -53,17 +47,19 @@ pipeline {
     post {
         success {
             script {
-                // Envoi d'un message de succès vers Slack avec le nom de l'image et du tag
+                // Send a success message to Slack with image name and tag
                 slackSend(channel: '#jenkins-messg', 
                           message: "Le build de pipeline Frontend a réussi : ${env.JOB_NAME} #${env.BUILD_NUMBER} ! Image pushed: ${DOCKER_IMAGE}:${IMAGE_TAG} successfully.")
             }
         }
         failure {
             script {
-                // Envoi d'un message d'échec vers Slack
+                // Send a failure message to Slack
                 slackSend(channel: '#jenkins-messg', 
                           message: "Le build de pipeline Frontend a échoué : ${env.JOB_NAME} #${env.BUILD_NUMBER}.")
             }
+        }
+    }
         }
     }
 }
