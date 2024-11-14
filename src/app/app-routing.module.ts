@@ -264,7 +264,7 @@ const routes: Routes = [
   { path: 'slider', component: SliderComponent },
 
 
-  // { path: 'SidebarBack', component: SidebarBackComponent },
+  // { path: 'SidebarBack', component: SidebarBackComponent },test
 
 
 
