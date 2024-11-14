@@ -1,0 +1,24 @@
+
+
+pipeline {
+    agent any
+
+
+    stages {
+
+
+    stage('Docker Build & Push') {
+        steps {
+            script {
+                withDockerRegistry(credentialsId: 'dockerhub-anis-credentials'){
+                    sh "docker build -t anisfetoui/anisfetoui-5se1-devdynamos-frontend:latest ."
+                    //sh "docker build -t anisfetoui/anisfetoui-5se1-devdynamos-frontend:latest"
+            }
+            }
+        }
+    }
+
+     
+
+    }
+    }
