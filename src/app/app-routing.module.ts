@@ -26,7 +26,6 @@ import { AffecterResProjComponent } from './BackOffice/Resources/affecter-res-pr
 import { ReclamationComponent } from './BackOffice/Reclamation/reclamation/reclamation.component';
 import { ShowReclamationComponent } from './BackOffice/Reclamation/show-reclamation/show-reclamation.component';
 import { StatRSFComponent } from './BackOffice/Stock/stat-rsf/stat-rsf.component';
-import { AllrecrutementComponent } from './FrontOffice/allrecrutement/allrecrutement.component';
 import { CandidatComponent } from './FrontOffice/Candidat/candidat.component';
 import { ModifierRecrutementComponent } from './BackOffice/modifier-recrutement/modifier-recrutement.component';
 import { CandidatsacceptesComponent } from './BackOffice/candidatsacceptes/candidatsacceptes.component';
@@ -129,8 +128,7 @@ const routes: Routes = [
      // { path: 'admin', component: TemplateBComponent },
       { path: 'recrutement', component: RecrutementComponent },
       { path: 'password', component: PasswordComponent },
-      { path: 'allrecrutement.html', component: AllrecrutementComponent },
-      { path: 'allrecrutement', component: AllrecrutementComponent },
+   
       { path: 'candidat/:idRec', component: CandidatComponent },
       {path:'DescriptionPostesComponent', component:DescriptionPostesComponent },
       { path: 'description-postes/:idRec', component: DescriptionPostesComponent },

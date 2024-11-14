@@ -49,7 +49,6 @@ import { StatRSFComponent } from './BackOffice/Stock/stat-rsf/stat-rsf.component
 import { RecrutementComponent } from './BackOffice/recrutement/recrutement.component';
 import { AddrecrutementComponent } from './BackOffice/addrecrutement/addrecrutement.component';
 import { ModifierRecrutementComponent } from './BackOffice/modifier-recrutement/modifier-recrutement.component';
-import { AllrecrutementComponent } from './FrontOffice/allrecrutement/allrecrutement.component';
 import { CandidatComponent } from './FrontOffice/Candidat/candidat.component';
 import { AllcandidatComponent } from './BackOffice/allcandidat/allcandidat.component';
 import { SearchFilterPipe } from './FrontOffice/searchFilter';
@@ -211,7 +210,6 @@ import { DescriptionPostesComponent } from './FrontOffice/description-postes/des
     AddrecrutementComponent,
     ModifierRecrutementComponent,
     ChatComponent,
-    AllrecrutementComponent,
     CandidatComponent,
     SearchFilterPipe,
     AllcandidatComponent,
