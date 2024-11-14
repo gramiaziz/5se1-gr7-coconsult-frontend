@@ -1,9 +1,5 @@
 pipeline {
     agent any
-    tools {
-        jdk 'JAVA_HOME'
-    }
-
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
         DOCKER_IMAGE = 'ktarichaima-g7-coconsult-front'  
