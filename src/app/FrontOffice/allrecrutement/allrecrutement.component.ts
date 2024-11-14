@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServicerecrutementService } from 'src/app/BackOffice/servicerecrutement.service';
 import { Recrutement } from 'src/app/BackOffice/recrutement.model';
 import { Router } from '@angular/router';
-import * as moment from 'moment';
+//import * as moment from 'moment';
 
 @Component({
     selector: 'app-allrecrutement',
