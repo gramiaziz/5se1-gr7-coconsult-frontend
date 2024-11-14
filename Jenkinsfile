@@ -26,7 +26,15 @@ pipeline {
                 sh 'ng build'
             }
         }
-        
+        stage('Build Frontend') {
+    steps {
+        sh 'npm install --legacy-peer-deps'
+        sh 'npm install moment --save'
+        sh 'npm install @types/moment --save-dev'
+        sh 'ng build'
+    }
+}
+
         stage('Docker Build Frontend') {
             steps {
                 script {
