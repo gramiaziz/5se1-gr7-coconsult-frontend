@@ -42,14 +42,7 @@ pipeline {
                 }
             }
         }
-       stage('Build and Deploy') {
-            steps {
-                script {
-                    // Exécution de la commande Docker Compose pour construire et démarrer les services
-                    sh 'docker-compose -f docker-compose.yml up --build -d'
-                }
-            }
-        }
+       
     }
 
     post {
