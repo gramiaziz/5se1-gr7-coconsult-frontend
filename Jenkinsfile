@@ -20,19 +20,6 @@ pipeline {
                 git branch: 'feature-chaimaktari', url: 'https://github.com/gramiaziz/5se1-gr7-coconsult-frontend.git'
             }
         }
-
-        stage('Build Frontend') {
-            steps {
-                // Installation des dépendances avec gestion des conflits
-                sh 'npm install --legacy-peer-deps'
-                // Installation des dépendances supplémentaires
-                sh 'npm install moment --save'
-                sh 'npm install @types/moment --save-dev'
-                // Build du projet Angular
-                sh 'ng build'
-            }
-        }
-
         stage('Docker Build Frontend') {
             steps {
                 script {
