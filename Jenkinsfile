@@ -42,6 +42,14 @@ pipeline {
                 }
             }
         }
+       stage('Build  Frontend with Docker Compose') {
+            steps {
+                script {
+                    // Construire et démarrer les conteneurs avec Docker Compose
+                    sh 'docker-compose -f $DOCKER_COMPOSE_FILE up --build -d'  // Utilisation de Docker Compose pour construire et lancer les services
+                }
+            }
+        }
     }
 
     post {
