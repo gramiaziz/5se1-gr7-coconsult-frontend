@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+    environment {
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
+        DOCKER_IMAGE = 'zahraeloulabou-g7-coconsult-front'  
+        IMAGE_TAG = 'latest'  
+    }
+
+    stages {
+        stage('Build Frontend') {
+            steps {
+                sh 'npm install --legacy-peer-deps'
+                sh 'ng build'
+            }
+        }
+
+        stage('Docker Build Frontend') {
+            steps {
+                script {
+                    sh "docker build -t ${DOCKER_IMAGE}:${IMAGE_TAG} ."
+                }
+            }
+        }
+
+        stage('Push Frontend Docker Image to Docker Hub') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        retry(3) {
+                            sh script: "echo \$DOCKER_PASSWORD | docker login -u \$DOCKER_USERNAME --password-stdin", returnStdout: true
+                            sh "docker tag ${DOCKER_IMAGE}:${IMAGE_TAG} \$DOCKER_USERNAME/${DOCKER_IMAGE}:${IMAGE_TAG}"
+                            sh "docker push \$DOCKER_USERNAME/${DOCKER_IMAGE}:${IMAGE_TAG}"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            mail to: 'zahrabou42@gmail.com',
+                 subject: "Succès de Build : ${env.JOB_NAME} [#${env.BUILD_NUMBER}]",
+                 body: "Le build a réussi ! Détails : ${env.BUILD_URL}"
+        }
+        
+        failure {
+            mail to: 'zahrabou42@gmail.com',
+                 subject: "Échec de Build : ${env.JOB_NAME} [#${env.BUILD_NUMBER}]",
+                 body: "Le build a échoué. Détails : ${env.BUILD_URL}"
+        }
+    }
+}
