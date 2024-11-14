@@ -9,8 +9,6 @@ pipeline {
     stages {
         stage('Build Frontend') {
             steps {
-                sh 'npm install'
-                
                 sh 'npm install --legacy-peer-deps'
                 sh 'ng build'
             }
