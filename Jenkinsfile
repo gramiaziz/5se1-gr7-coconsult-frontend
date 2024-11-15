@@ -27,7 +27,7 @@ pipeline {
         stage('Push Frontend Docker Image to Docker Hub') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    /*withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         retry(3) { // Retry up to 3 times
                             // Login to Docker Hub
                             sh script: "echo \$DOCKER_PASSWORD | docker login -u \$DOCKER_USERNAME --password-stdin", returnStdout: true
@@ -38,7 +38,8 @@ pipeline {
                             // Push the Docker image
                             sh "docker push \$DOCKER_USERNAME/${DOCKER_IMAGE}:${IMAGE_TAG}"
                         }
-                    }
+                    }*/
+                  sleep 60
                 }
             }
         }
