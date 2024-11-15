@@ -2,12 +2,12 @@ pipeline {
     agent any
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
-        DOCKER_IMAGE = 'ktarichaima-g7-coconsult-front'  
+        DOCKER_IMAGE = 'zahraeloulabouafoura-g7-coconsult-front'  
         IMAGE_TAG = 'latest'  
     }
 
     stages {
-        stage('Build Frontend') {
+        stage('Build angular') {
             steps {
                 sh 'npm install --legacy-peer-deps'
                 // sleep 60
@@ -15,7 +15,7 @@ pipeline {
             }
         }
 
-        stage('Docker Build Frontend') {
+        stage('Docker Build angular') {
             steps {
                 script {
                     // Build Docker image for frontend
@@ -24,7 +24,7 @@ pipeline {
             }
         }
 
-        stage('Push Frontend Docker Image to Docker Hub') {
+        stage('Push angular Docker Image to Docker Hub') {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
@@ -44,20 +44,18 @@ pipeline {
         }
     }
 
-    post {
+   post {
         success {
-            script {
-                // Send a success message to Slack with image name and tag
-                slackSend(channel: '#jenkins-messg', 
-                          message: "Le build de pipeline Frontend a réussi : ${env.JOB_NAME} #${env.BUILD_NUMBER} ! Image pushed: ${DOCKER_IMAGE}:${IMAGE_TAG} successfully.")
-            }
+            mail to: 'zahrabou42@gmail.com',
+                 subject: "Succès de Build : ${env.JOB_NAME} [#${env.BUILD_NUMBER}]",
+                 body: "Le build a réussi ! Détails : ${env.BUILD_URL}"
         }
+        
         failure {
-            script {
-                // Send a failure message to Slack
-                slackSend(channel: '#jenkins-messg', 
-                          message: "Le build de pipeline Frontend a échoué : ${env.JOB_NAME} #${env.BUILD_NUMBER}.")
-            }
+            mail to: 'zahrabou42@gmail.com',
+                 subject: "Échec de Build : ${env.JOB_NAME} [#${env.BUILD_NUMBER}]",
+                 body: "Le build a échoué. Détails : ${env.BUILD_URL}"
         }
     }
 }
+
