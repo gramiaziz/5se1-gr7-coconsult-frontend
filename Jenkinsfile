@@ -2,8 +2,8 @@ pipeline {
     agent any
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
-        DOCKER_IMAGE = 'chaimaktari-g7-coconsult-front'  
-        IMAGE_TAG = 'v1'  
+        DOCKER_IMAGE = 'devops-chaimaktari-g7-coconsult-front'  
+        IMAGE_TAG = 'latest'  
     }
 
     stages {
