@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
         DOCKER_IMAGE = 'chaimaktari-g7-coconsult-front'  
-        IMAGE_TAG = 'latest'  
+        IMAGE_TAG = 'v1'  
     }
 
     stages {
