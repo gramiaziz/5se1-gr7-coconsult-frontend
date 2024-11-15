@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
-        DOCKER_IMAGE = 'ktarichaima-g7-coconsult-front'  
+        DOCKER_IMAGE = 'chaimaktari-g7-coconsult-front'  
         IMAGE_TAG = 'latest'  
     }
 
@@ -42,21 +42,20 @@ pipeline {
                 }
             }
         }
+       
     }
 
     post {
         success {
             script {
-                // Send a success message to Slack with image name and tag
-                slackSend(channel: '#jenkins-messg', 
-                          message: "Le build de pipeline Frontend a réussi : ${env.JOB_NAME} #${env.BUILD_NUMBER} ! Image pushed: ${DOCKER_IMAGE}:${IMAGE_TAG} successfully.")
+                // Affichage du message de succès dans les logs Jenkins
+                echo "Le build de pipeline Frontend a réussi : ${env.JOB_NAME} #${env.BUILD_NUMBER} ! Image poussée : ${DOCKER_IMAGE}:${IMAGE_TAG}."
             }
         }
         failure {
             script {
-                // Send a failure message to Slack
-                slackSend(channel: '#jenkins-messg', 
-                          message: "Le build de pipeline Frontend a échoué : ${env.JOB_NAME} #${env.BUILD_NUMBER}.")
+                // Affichage du message d'échec dans les logs Jenkins
+                echo "Le build de pipeline Frontend a échoué : ${env.JOB_NAME} #${env.BUILD_NUMBER}."
             }
         }
     }
